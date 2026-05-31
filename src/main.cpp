@@ -1,17 +1,16 @@
-// Copyright 2022 NNTU-CS
-#include <iostream>
+// src/main.cpp
 #include "train.h"
+#include <iostream>
 
 int main() {
     Train train;
+    int count = 60;
     
-    train.addCar(false);
-    train.addCar(false);
-    train.addCar(false);
-    train.addCar(false);
+    while (count--)
+        train.addCar(false);
     
-    int len = train.getLength();
-    int ops = train.getOpCount();
+    std::cout << train.getLength() << std::endl;
+    std::cout << train.getOpCount() << std::endl;
     
     return 0;
 }
