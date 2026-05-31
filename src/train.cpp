@@ -1,21 +1,13 @@
 // src/train.cpp
 #include "train.h"
 
-Train::Train() : countOp(0), first(nullptr), length(0) {}
-
-Train::~Train() {
-    if (!first) return;
-    Car* current = first;
-    Car* nextCar;
-    do {
-        nextCar = current->next;
-        delete current;
-        current = nextCar;
-    } while (current != first);
-}
+Train::Train() : countOp(0), first(nullptr) {}
 
 void Train::addCar(bool light) {
-    Car* newCar = new Car(light);
+    Car* newCar = new Car;
+    newCar->light = light;
+    newCar->next = nullptr;
+    newCar->prev = nullptr;
     
     if (!first) {
         first = newCar;
@@ -28,7 +20,10 @@ void Train::addCar(bool light) {
         newCar->next = first;
         first->prev = newCar;
     }
-    length++;
+}
+
+int Train::getOpCount() {
+    return countOp;
 }
 
 int Train::getLength() {
