@@ -7,12 +7,11 @@ int main() {
     
     train.addCar(false);
     train.addCar(false);
-    train.addCar(true);
     train.addCar(false);
-    train.addCar(true);
+    train.addCar(false);
     
-    int length = train.getLength();
-    int operations = train.getOpCount();
+    int len = train.getLength();
+    int ops = train.getOpCount();
     
     return 0;
 }
