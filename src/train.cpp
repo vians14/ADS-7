@@ -23,7 +23,7 @@ int Train::getLength() {
   if (first == nullptr) return 0;
 
   int size = 0;
-  Car* ptr = first;
+  const Car* ptr = first;
   do {
     size = size + 1;
     ptr = ptr->next;
