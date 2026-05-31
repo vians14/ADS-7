@@ -33,17 +33,17 @@ void Train::addCar(bool light) {
 
 int Train::getLength() {
     if (!first) return 0;
-    if (length == 1) return 1;
     
     countOp = 0;
     Car* current = first;
     
+    bool initialState = current->light;
     current->light = true;
     
     int step = 1;
-    int totalLength = 1;
+    int result = 0;
     
-    while (true) {
+    while (result == 0) {
         for (int i = 0; i < step; i++) {
             current = current->next;
             countOp++;
@@ -51,33 +51,41 @@ int Train::getLength() {
         
         if (!current->light) {
             current->light = true;
-            totalLength += step;
             step = 1;
-            continue;
-        }
-        
-        Car* test = current;
-        for (int i = 0; i < totalLength; i++) {
-            test = test->prev;
-            countOp++;
-            if (test == first) {
-                bool allLight = true;
-                Car* check = first;
-                for (int j = 0; j < totalLength; j++) {
-                    countOp++;
-                    if (!check->light) {
-                        allLight = false;
-                        break;
-                    }
-                    check = check->next;
+        } else {
+            bool success = true;
+            Car* check = current;
+            
+            for (int i = 0; i < step; i++) {
+                check = check->prev;
+                countOp++;
+            }
+            
+            Car* verify = check;
+            for (int i = 0; i < step; i++) {
+                countOp++;
+                if (!verify->light) {
+                    success = false;
+                    break;
                 }
-                
-                if (allLight) {
-                    return totalLength;
-                }
+                verify = verify->next;
+            }
+            
+            if (success) {
+                result = step;
+            } else {
+                step++;
             }
         }
-        
-        step++;
     }
+    
+    current = first;
+    for (int i = 0; i < result; i++) {
+        current->light = true;
+        current = current->next;
+        if (i < result - 1) countOp++;
+    }
+    first->light = initialState;
+    
+    return result;
 }
